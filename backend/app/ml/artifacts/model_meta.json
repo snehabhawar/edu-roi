@@ -1,0 +1,108 @@
+{
+  "features": [
+    "major_enc",
+    "country_enc",
+    "tier_encoded",
+    "demand",
+    "growth_pct",
+    "stem",
+    "professional",
+    "gdp_per_capita",
+    "gini",
+    "pr_ease"
+  ],
+  "major_features": {
+    "cs": {
+      "demand": 95,
+      "growth_pct": 25,
+      "stem": 1,
+      "professional": 0
+    },
+    "engineering": {
+      "demand": 88,
+      "growth_pct": 18,
+      "stem": 1,
+      "professional": 0
+    },
+    "medicine": {
+      "demand": 92,
+      "growth_pct": 20,
+      "stem": 1,
+      "professional": 1
+    },
+    "business": {
+      "demand": 75,
+      "growth_pct": 12,
+      "stem": 0,
+      "professional": 0
+    },
+    "nursing": {
+      "demand": 92,
+      "growth_pct": 22,
+      "stem": 1,
+      "professional": 1
+    },
+    "law": {
+      "demand": 65,
+      "growth_pct": 14,
+      "stem": 0,
+      "professional": 1
+    },
+    "psychology": {
+      "demand": 60,
+      "growth_pct": 10,
+      "stem": 0,
+      "professional": 0
+    },
+    "education": {
+      "demand": 70,
+      "growth_pct": 8,
+      "stem": 0,
+      "professional": 1
+    },
+    "arts": {
+      "demand": 50,
+      "growth_pct": 13,
+      "stem": 0,
+      "professional": 0
+    },
+    "english": {
+      "demand": 45,
+      "growth_pct": 7,
+      "stem": 0,
+      "professional": 0
+    }
+  },
+  "country_features": {
+    "us": {
+      "gdp_per_capita": 80000,
+      "gini": 0.39,
+      "pr_ease": 45
+    },
+    "uk": {
+      "gdp_per_capita": 46000,
+      "gini": 0.35,
+      "pr_ease": 70
+    },
+    "de": {
+      "gdp_per_capita": 52000,
+      "gini": 0.32,
+      "pr_ease": 78
+    },
+    "au": {
+      "gdp_per_capita": 65000,
+      "gini": 0.33,
+      "pr_ease": 82
+    },
+    "in": {
+      "gdp_per_capita": 2500,
+      "gini": 0.35,
+      "pr_ease": 100
+    }
+  },
+  "tiers": {
+    "top": 2,
+    "mid": 1,
+    "low": 0
+  }
+}
