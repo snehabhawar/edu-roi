@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
 
 const PrismaticBurst = dynamic(() => import('./components/PrismaticBurst'), { ssr: false })
@@ -109,22 +110,30 @@ export default function Landing() {
           </div>
           <span style={{ color:'#fff', fontWeight:800, fontSize:18, fontFamily:F.head, letterSpacing:'-0.5px' }}>EduROI</span>
         </div>
-        <button onClick={() => router.push('/calculator')}
-          style={{ padding:'9px 24px', fontSize:13, fontWeight:600, color:'#fff', fontFamily:F.body,
-            background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)',
-            borderRadius:40, cursor:'pointer', letterSpacing:'-0.1px', transition:'all 0.2s' }}
-          onMouseEnter={e => { const el=e.currentTarget; el.style.background='rgba(255,255,255,0.11)'; el.style.borderColor='rgba(255,255,255,0.22)' }}
-          onMouseLeave={e => { const el=e.currentTarget; el.style.background='rgba(255,255,255,0.06)'; el.style.borderColor='rgba(255,255,255,0.12)' }}>
-          Sign in
-        </button>
+
+        {/* Clerk auth buttons */}
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button style={{ padding:'9px 24px', fontSize:13, fontWeight:600, color:'#fff',
+              fontFamily:F.body, background:'rgba(255,255,255,0.06)',
+              border:'1px solid rgba(255,255,255,0.12)', borderRadius:40,
+              cursor:'pointer', letterSpacing:'-0.1px', transition:'all 0.2s' }}
+              onMouseEnter={e => { const el=e.currentTarget; el.style.background='rgba(255,255,255,0.11)'; el.style.borderColor='rgba(255,255,255,0.22)' }}
+              onMouseLeave={e => { const el=e.currentTarget; el.style.background='rgba(255,255,255,0.06)'; el.style.borderColor='rgba(255,255,255,0.12)' }}>
+              Sign in
+            </button>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
       </nav>
 
-      {/* ── Ticker — BIG CARDS ── */}
+      {/* Ticker */}
       <div style={{ position:'relative', zIndex:10, marginTop:64, overflow:'hidden', padding:'20px 0' }}>
         <div style={{ position:'absolute', left:0, top:0, bottom:0, width:160, background:'linear-gradient(to right,#06060f,transparent)', zIndex:5, pointerEvents:'none' }} />
         <div style={{ position:'absolute', right:0, top:0, bottom:0, width:160, background:'linear-gradient(to left,#06060f,transparent)', zIndex:5, pointerEvents:'none' }} />
-
-        <div style={{ display:'flex', gap:16, animation:'ticker 40s linear infinite', width:'max-content', cursor:'default' }}>
+        <div style={{ display:'flex', gap:16, animation:'ticker 40s linear infinite', width:'max-content' }}>
           {allCards.map((c, i) => (
             <div key={i} onClick={() => router.push('/calculator')}
               style={{
@@ -136,15 +145,12 @@ export default function Landing() {
               }}
               onMouseEnter={e => { const el=e.currentTarget; el.style.transform='translateY(-4px) scale(1.02)'; el.style.borderColor='rgba(99,102,241,0.6)' }}
               onMouseLeave={e => { const el=e.currentTarget; el.style.transform=''; el.style.borderColor='rgba(255,255,255,0.1)' }}>
-              {/* Noise overlay */}
-              <div style={{ position:'absolute', inset:0, background:'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.03\'/%3E%3C/svg%3E")', opacity:0.4 }} />
-              {/* Bottom gradient */}
               <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%)' }} />
-              {/* Flag */}
-              <div style={{ position:'absolute', top:16, left:16, fontSize:38, fontFamily:'"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif', lineHeight:1, filter:'drop-shadow(0 2px 8px rgba(0,0,0,0.5))' }}>
+              <div style={{ position:'absolute', top:16, left:16, fontSize:38,
+                fontFamily:'"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif',
+                lineHeight:1, filter:'drop-shadow(0 2px 8px rgba(0,0,0,0.5))' }}>
                 {c.emoji}
               </div>
-              {/* Text */}
               <div style={{ position:'absolute', bottom:14, left:16, right:16 }}>
                 <div style={{ fontSize:15, fontWeight:800, color:'#fff', fontFamily:F.head, letterSpacing:'-0.3px', marginBottom:2 }}>{c.name}</div>
                 <div style={{ fontSize:11, color:'rgba(255,255,255,0.55)', fontFamily:F.body, lineHeight:1.4 }}>{c.sub}</div>
@@ -154,16 +160,14 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* ── Hero ── */}
+      {/* Hero */}
       <div style={{ position:'relative', zIndex:10, display:'flex', flexDirection:'column', alignItems:'center', padding:'52px 24px 0', textAlign:'center' }}>
 
-        {/* Badge */}
         <div style={{ display:'inline-flex', alignItems:'center', gap:7, background:'rgba(99,102,241,0.1)', border:'1px solid rgba(99,102,241,0.2)', borderRadius:20, padding:'5px 16px', marginBottom:28 }}>
           <span style={{ width:5, height:5, borderRadius:'50%', background:'#818cf8', display:'inline-block', animation:'pulse 2s infinite' }} />
           <span style={{ fontSize:11, color:'#818cf8', fontWeight:600, letterSpacing:'0.6px', fontFamily:F.body }}>ML-POWERED · 5 COUNTRIES · 10 MAJORS</span>
         </div>
 
-        {/* Headline */}
         <div style={{ marginBottom:20, lineHeight:1.04, letterSpacing:'-2.5px' }}>
           <span style={{ display:'block', fontSize:'clamp(36px,6vw,72px)', fontWeight:900, color:'rgba(255,255,255,0.94)', fontFamily:F.head }}>
             {typed}
@@ -176,13 +180,12 @@ export default function Landing() {
           </span>
         </div>
 
-        {/* Sub */}
-        <p style={{ fontSize:'clamp(14px,1.6vw,18px)', color:'rgba(255,255,255,0.38)', lineHeight:1.75, maxWidth:500, marginBottom:36, fontFamily:F.body, fontWeight:400,
+        <p style={{ fontSize:'clamp(14px,1.6vw,18px)', color:'rgba(255,255,255,0.38)', lineHeight:1.75,
+          maxWidth:500, marginBottom:36, fontFamily:F.body, fontWeight:400,
           opacity:showSub?1:0, transform:showSub?'none':'translateY(8px)', transition:'all 0.55s ease' }}>
           Compare graduate salaries, student debt and immigration pathways across 5 countries — powered by machine learning trained on 12,000 real data points.
         </p>
 
-        {/* CTA */}
         <div style={{ marginBottom:56, opacity:showSub?1:0, transition:'opacity 0.65s ease 0.1s' }}>
           <button onClick={() => router.push('/calculator')}
             style={{ padding:'15px 44px', fontSize:16, fontWeight:700, fontFamily:F.head,
@@ -215,8 +218,6 @@ export default function Landing() {
           </div>
         ))}
       </div>
-
-    
     </div>
   )
 }

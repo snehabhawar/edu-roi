@@ -1,6 +1,7 @@
 'use client'
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
 
 const Aurora = dynamic(() => import('../components/Aurora'), { ssr: false })
@@ -122,14 +123,12 @@ function ROICard({r,rank}:{r:ROIResult;rank:number}){
     }}
       onMouseEnter={e=>{if(!isTop)(e.currentTarget as HTMLElement).style.borderColor='rgba(255,255,255,0.14)'}}
       onMouseLeave={e=>{if(!isTop)(e.currentTarget as HTMLElement).style.borderColor='rgba(255,255,255,0.07)'}}>
-
       {isTop && (
         <div style={{background:'linear-gradient(90deg,#6366f1,#8b5cf6)',color:'#fff',textAlign:'center',
           fontSize:10,fontWeight:700,padding:'7px',letterSpacing:'1.5px',fontFamily:F.body}}>
           BEST ROI
         </div>
       )}
-
       <div style={{padding:'18px 18px 12px'}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:14}}>
           <div style={{display:'flex',alignItems:'center',gap:10}}>
@@ -144,7 +143,6 @@ function ROICard({r,rank}:{r:ROIResult;rank:number}){
             <div style={{fontSize:10,fontWeight:600,color:sc(s),fontFamily:F.body}}>{s>=70?'Strong ROI':s>=50?'Average':'Risky'}</div>
           </div>
         </div>
-
         <div style={{background:'rgba(255,255,255,0.04)',borderRadius:10,padding:'12px 14px',marginBottom:10}}>
           <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',marginBottom:3,fontFamily:F.body}}>Predicted salary</div>
           <div style={{fontSize:26,fontWeight:800,color:'rgba(255,255,255,0.92)',fontFamily:F.head,letterSpacing:'-0.5px'}}>
@@ -152,7 +150,6 @@ function ROICard({r,rank}:{r:ROIResult;rank:number}){
           </div>
           <div style={{fontSize:10,color:'rgba(255,255,255,0.22)',marginTop:2,fontFamily:F.body}}>{fmt(r.salary_p25_usd)} – {fmt(r.salary_p75_usd)} range</div>
         </div>
-
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,marginBottom:10}}>
           {[
             {l:'Total cost',     v:fmt(r.total_cost_usd),              c:'rgba(255,255,255,0.78)'},
@@ -166,7 +163,6 @@ function ROICard({r,rank}:{r:ROIResult;rank:number}){
             </div>
           ))}
         </div>
-
         <div style={{background:'rgba(99,102,241,0.06)',border:'1px solid rgba(99,102,241,0.14)',borderRadius:10,padding:'10px 14px',display:'flex',justifyContent:'space-between'}}>
           <div>
             <div style={{fontSize:10,color:'rgba(165,180,252,0.6)',fontFamily:F.body}}>10-year earnings</div>
@@ -178,7 +174,6 @@ function ROICard({r,rank}:{r:ROIResult;rank:number}){
           </div>
         </div>
       </div>
-
       <button onClick={()=>setOpen(!open)} style={{width:'100%',padding:'10px',background:'none',border:'none',
         borderTop:'1px solid rgba(255,255,255,0.05)',cursor:'pointer',fontSize:11,
         color:'rgba(129,140,248,0.8)',fontWeight:600,fontFamily:F.body}}>
@@ -199,20 +194,19 @@ function ROICard({r,rank}:{r:ROIResult;rank:number}){
 function PRCard({p,origin}:{p:PRResult;origin:Origin}){
   const [open,setOpen]=useState(false)
   const m=cMeta(p.country)
-
   if(p.country==='in'&&origin==='in') return(
     <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:20,padding:18}}>
       <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:12}}>
         <span style={{fontSize:28,fontFamily:'"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'}}>{m.flag}</span>
         <div style={{fontSize:17,fontWeight:800,color:'rgba(255,255,255,0.9)',fontFamily:F.head}}>{m.name}</div>
       </div>
-      <div style={{background:'rgba(74,222,128,0.06)',border:'1px solid rgba(74,222,128,0.15)',borderRadius:10,padding:'12px 14px',color:'#4ade80',fontSize:13,lineHeight:1.6,fontFamily:F.body}}>
+      <div style={{background:'rgba(74,222,128,0.06)',border:'1px solid rgba(74,222,128,0.15)',borderRadius:10,
+        padding:'12px 14px',color:'#4ade80',fontSize:13,lineHeight:1.6,fontFamily:F.body}}>
         <strong>Studying in your home country — no PR needed.</strong><br/>
         You already have full rights to live and work here.
       </div>
     </div>
   )
-
   const color=prColor(p.ease_score)
   return(
     <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:20,overflow:'hidden',transition:'border-color 0.2s'}}
@@ -232,14 +226,12 @@ function PRCard({p,origin}:{p:PRResult;origin:Origin}){
             <div style={{fontSize:10,fontWeight:600,color,fontFamily:F.body}}>{p.ease_label}</div>
           </div>
         </div>
-
         <div style={{marginBottom:12}}>
           <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',marginBottom:5,fontFamily:F.body}}>Ease of getting PR (0 = very hard, 100 = easy)</div>
           <div style={{height:5,background:'rgba(255,255,255,0.06)',borderRadius:99,overflow:'hidden'}}>
             <div style={{height:'100%',width:`${p.ease_score}%`,background:color,borderRadius:99,transition:'width 0.7s ease'}}/>
           </div>
         </div>
-
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,marginBottom:10}}>
           {[
             {l:'Work rights',  v:`${p.post_study_work_years} yrs`,           c:p.post_study_work_years>=3?'#4ade80':'#fbbf24'},
@@ -253,13 +245,11 @@ function PRCard({p,origin}:{p:PRResult;origin:Origin}){
             </div>
           ))}
         </div>
-
         <div style={{background:'rgba(255,255,255,0.04)',borderRadius:10,padding:'10px 12px'}}>
           <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',marginBottom:4,fontFamily:F.body}}>Visa route</div>
           <div style={{fontSize:12,color:'rgba(255,255,255,0.65)',fontWeight:500,lineHeight:1.5,fontFamily:F.body}}>{p.visa_path}</div>
         </div>
       </div>
-
       <button onClick={()=>setOpen(!open)} style={{width:'100%',padding:'10px',background:'none',border:'none',
         borderTop:'1px solid rgba(255,255,255,0.05)',cursor:'pointer',fontSize:11,
         color:'rgba(129,140,248,0.8)',fontWeight:600,fontFamily:F.body}}>
@@ -312,7 +302,6 @@ export default function Calculator() {
     const aidPct   = clampNum(aidStr, 0, 100, 20)
     const customTuition = tuitionStr.trim()!=='' ? clampNum(tuitionStr,0,200000,-1) : -1
     const customLiving  = livingStr.trim()!==''  ? clampNum(livingStr,0,100000,-1)  : -1
-
     setLoading(true); setError(''); setDone(true)
     const countries = COUNTRIES.filter(c=>selected.has(c.code)).map(c=>c.code)
     try {
@@ -338,13 +327,11 @@ export default function Calculator() {
   return (
     <div style={{minHeight:'100vh',background:'#06060f',position:'relative',overflow:'hidden',fontFamily:F.body}}>
 
-      {/* Aurora background */}
+      {/* Aurora */}
       <div style={{position:'fixed',inset:0,zIndex:0,opacity:0.9}}>
         <Aurora colorStops={['#5227FF','#7cff67','#5227FF']} blend={0.5} amplitude={1.0} speed={0.8} />
       </div>
-      {/* Dark overlay */}
       <div style={{position:'fixed',inset:0,zIndex:1,background:'rgba(6,6,15,0.72)',pointerEvents:'none'}} />
-      {/* Grid */}
       <div style={{position:'fixed',inset:0,zIndex:1,pointerEvents:'none',
         backgroundImage:'linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px)',
         backgroundSize:'56px 56px'}} />
@@ -362,18 +349,23 @@ export default function Calculator() {
         </button>
         <div style={{display:'flex',alignItems:'center',gap:12}}>
           <span style={{fontSize:12,color:'rgba(255,255,255,0.22)',fontFamily:F.body}}>5 countries · ML-powered</span>
-          <button onClick={()=>router.push('/')}
-            style={{padding:'8px 20px',background:'linear-gradient(135deg,#6366f1,#8b5cf6)',color:'#fff',
-              border:'none',borderRadius:8,fontSize:12,cursor:'pointer',fontWeight:600,fontFamily:F.body,
-              boxShadow:'0 2px 14px rgba(99,102,241,0.35)'}}>
-            Sign in
-          </button>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button style={{padding:'8px 20px',background:'linear-gradient(135deg,#6366f1,#8b5cf6)',
+                color:'#fff',border:'none',borderRadius:8,fontSize:12,cursor:'pointer',
+                fontWeight:600,fontFamily:F.body,boxShadow:'0 2px 14px rgba(99,102,241,0.35)'}}>
+                Sign in
+              </button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
         </div>
       </nav>
 
       {/* Body */}
       <div style={{position:'relative',zIndex:10,maxWidth:1060,margin:'0 auto',padding:'34px 20px 80px'}}>
-
         <div style={{marginBottom:28}}>
           <h1 style={{fontSize:26,fontWeight:800,color:'rgba(255,255,255,0.92)',marginBottom:5,fontFamily:F.head,letterSpacing:'-0.6px'}}>College ROI Calculator</h1>
           <p style={{fontSize:13,color:'rgba(255,255,255,0.28)',fontFamily:F.body}}>Compare salary, debt and immigration pathways across 5 countries.</p>
@@ -403,15 +395,13 @@ export default function Calculator() {
             </p>
           </div>
 
-          {/* Field grid */}
+          {/* Fields */}
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(190px,1fr))',gap:14,marginBottom:20}}>
-
             <div><label style={labelS}>Field of study</label>
               <select style={selectS} value={major} onChange={e=>setMajor(e.target.value as Major)} onFocus={focusIn} onBlur={focusOut}>
                 {MAJORS.map(m=><option key={m.value} value={m.value}>{m.label}</option>)}
               </select>
             </div>
-
             <div><label style={labelS}>University tier</label>
               <select style={selectS} value={tier} onChange={e=>setTier(e.target.value as Tier)} onFocus={focusIn} onBlur={focusOut}>
                 <option value="top">Top-tier / Elite</option>
@@ -419,7 +409,6 @@ export default function Calculator() {
                 <option value="low">Budget / Community</option>
               </select>
             </div>
-
             <div>
               <label style={labelS}>Duration (years)</label>
               <input type="number" style={inputS} value={durationStr}
@@ -428,14 +417,12 @@ export default function Calculator() {
                 placeholder={degLevel==='undergraduate'?'3 – 5':'1 – 4'} />
               <span style={hintS}>{degLevel==='undergraduate'?'Enter 3 to 5':'Enter 1 to 4'}</span>
             </div>
-
             <div>
               <label style={labelS}>Financial aid (%)</label>
               <input type="number" style={inputS} value={aidStr} min={0} max={100}
                 onChange={e=>setAidStr(e.target.value)} onFocus={focusIn} onBlur={focusOut} placeholder="0 – 100" />
               <span style={hintS}>Percentage of tuition covered</span>
             </div>
-
             <div>
               <label style={labelS}>Annual tuition USD <span style={{color:'rgba(255,255,255,0.18)',fontWeight:400}}>optional</span></label>
               <input type="number" style={inputS} value={tuitionStr} min={0} max={200000}
@@ -443,7 +430,6 @@ export default function Calculator() {
                 placeholder="Leave blank for defaults" />
               <span style={hintS}>Overrides country defaults</span>
             </div>
-
             <div>
               <label style={labelS}>Annual living cost USD <span style={{color:'rgba(255,255,255,0.18)',fontWeight:400}}>optional</span></label>
               <input type="number" style={inputS} value={livingStr} min={0} max={100000}
@@ -451,7 +437,6 @@ export default function Calculator() {
                 placeholder="Leave blank for defaults" />
               <span style={hintS}>Overrides country defaults</span>
             </div>
-
             <div><label style={labelS}>Accommodation</label>
               <select style={selectS} value={living} onChange={e=>setLiving(e.target.value as Living)} onFocus={focusIn} onBlur={focusOut}>
                 <option value="campus">On-campus dorm</option>
@@ -459,17 +444,15 @@ export default function Calculator() {
                 <option value="home">Living at home</option>
               </select>
             </div>
-
             <div><label style={labelS}>Your home country</label>
               <select style={selectS} value={origin} onChange={e=>setOrigin(e.target.value as Origin)} onFocus={focusIn} onBlur={focusOut}>
                 {ORIGINS.map(o=><option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </div>
-
           </div>
 
           {/* Countries */}
-          <div style={{...labelS,marginBottom:10}}>Countries to compare <span style={{color:'rgba(255,255,255,0.2)',fontWeight:400,textTransform:'none',letterSpacing:0}}>(min 2)</span></div>
+          <div style={{...labelS,marginBottom:10}}>Countries <span style={{color:'rgba(255,255,255,0.2)',fontWeight:400,textTransform:'none',letterSpacing:0}}>(min 2)</span></div>
           <div style={{display:'flex',flexWrap:'wrap',gap:8,marginBottom:22}}>
             {COUNTRIES.map(c=>(
               <button key={c.code} onClick={()=>toggleCountry(c.code)}
@@ -479,8 +462,7 @@ export default function Calculator() {
                   background:selected.has(c.code)?'#6366f1':'rgba(255,255,255,0.04)',
                   color:selected.has(c.code)?'#fff':'rgba(255,255,255,0.38)'}}>
                 <span style={{fontSize:17,fontFamily:'"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'}}>{c.flag}</span>
-                {c.name}
-                {selected.has(c.code)&&<span style={{fontSize:11,opacity:0.7}}>✓</span>}
+                {c.name}{selected.has(c.code)&&<span style={{fontSize:11,opacity:0.7}}>✓</span>}
               </button>
             ))}
           </div>
@@ -562,8 +544,6 @@ export default function Calculator() {
           </div>
         )}
       </div>
-
-      
     </div>
   )
 }
