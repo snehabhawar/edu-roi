@@ -1,7 +1,6 @@
 'use client'
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
 
 const Aurora = dynamic(() => import('../components/Aurora'), { ssr: false })
@@ -152,10 +151,10 @@ function ROICard({r,rank}:{r:ROIResult;rank:number}){
         </div>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,marginBottom:10}}>
           {[
-            {l:'Total cost',     v:fmt(r.total_cost_usd),              c:'rgba(255,255,255,0.78)'},
-            {l:'Student debt',   v:fmt(r.debt_usd),                    c:r.debt_usd<20000?'#4ade80':r.debt_usd>60000?'#f87171':'#fbbf24'},
-            {l:'Payoff time',    v:`${r.payoff_years} yrs`,            c:r.payoff_years<=5?'#4ade80':r.payoff_years>15?'#f87171':'#fbbf24'},
-            {l:'Monthly',        v:`${fmt(r.monthly_payment_usd)}/mo`, c:'rgba(255,255,255,0.78)'},
+            {l:'Total cost',   v:fmt(r.total_cost_usd),              c:'rgba(255,255,255,0.78)'},
+            {l:'Student debt', v:fmt(r.debt_usd),                    c:r.debt_usd<20000?'#4ade80':r.debt_usd>60000?'#f87171':'#fbbf24'},
+            {l:'Payoff time',  v:`${r.payoff_years} yrs`,            c:r.payoff_years<=5?'#4ade80':r.payoff_years>15?'#f87171':'#fbbf24'},
+            {l:'Monthly',      v:`${fmt(r.monthly_payment_usd)}/mo`, c:'rgba(255,255,255,0.78)'},
           ].map(item=>(
             <div key={item.l} style={{background:'rgba(255,255,255,0.04)',borderRadius:8,padding:'9px 11px'}}>
               <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',marginBottom:2,fontFamily:F.body}}>{item.l}</div>
@@ -298,8 +297,8 @@ export default function Calculator() {
   }
 
   const compare = useCallback(async () => {
-    const duration = clampNum(durationStr, 1, 6, degLevel==='undergraduate'?4:2)
-    const aidPct   = clampNum(aidStr, 0, 100, 20)
+    const duration      = clampNum(durationStr, 1, 6, degLevel==='undergraduate'?4:2)
+    const aidPct        = clampNum(aidStr, 0, 100, 20)
     const customTuition = tuitionStr.trim()!=='' ? clampNum(tuitionStr,0,200000,-1) : -1
     const customLiving  = livingStr.trim()!==''  ? clampNum(livingStr,0,100000,-1)  : -1
     setLoading(true); setError(''); setDone(true)
@@ -327,7 +326,6 @@ export default function Calculator() {
   return (
     <div style={{minHeight:'100vh',background:'#06060f',position:'relative',overflow:'hidden',fontFamily:F.body}}>
 
-      {/* Aurora */}
       <div style={{position:'fixed',inset:0,zIndex:0,opacity:0.9}}>
         <Aurora colorStops={['#5227FF','#7cff67','#5227FF']} blend={0.5} amplitude={1.0} speed={0.8} />
       </div>
@@ -349,18 +347,13 @@ export default function Calculator() {
         </button>
         <div style={{display:'flex',alignItems:'center',gap:12}}>
           <span style={{fontSize:12,color:'rgba(255,255,255,0.22)',fontFamily:F.body}}>5 countries · ML-powered</span>
-          <SignedOut>
-            <SignInButton mode="modal">
-              <button style={{padding:'8px 20px',background:'linear-gradient(135deg,#6366f1,#8b5cf6)',
-                color:'#fff',border:'none',borderRadius:8,fontSize:12,cursor:'pointer',
-                fontWeight:600,fontFamily:F.body,boxShadow:'0 2px 14px rgba(99,102,241,0.35)'}}>
-                Sign in
-              </button>
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
+          <button
+            onClick={() => router.push('/')}
+            style={{padding:'8px 20px',background:'linear-gradient(135deg,#6366f1,#8b5cf6)',
+              color:'#fff',border:'none',borderRadius:8,fontSize:12,cursor:'pointer',
+              fontWeight:600,fontFamily:F.body,boxShadow:'0 2px 14px rgba(99,102,241,0.35)'}}>
+            Sign in
+          </button>
         </div>
       </nav>
 
@@ -375,7 +368,6 @@ export default function Calculator() {
         <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.08)',
           borderRadius:22,padding:28,marginBottom:22,backdropFilter:'blur(24px)'}}>
 
-          {/* Degree toggle */}
           <div style={{marginBottom:22}}>
             <div style={{...labelS,marginBottom:8}}>Degree level</div>
             <div style={{display:'inline-flex',background:'rgba(255,255,255,0.05)',borderRadius:11,padding:3,gap:3}}>
@@ -395,7 +387,6 @@ export default function Calculator() {
             </p>
           </div>
 
-          {/* Fields */}
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(190px,1fr))',gap:14,marginBottom:20}}>
             <div><label style={labelS}>Field of study</label>
               <select style={selectS} value={major} onChange={e=>setMajor(e.target.value as Major)} onFocus={focusIn} onBlur={focusOut}>
@@ -451,7 +442,6 @@ export default function Calculator() {
             </div>
           </div>
 
-          {/* Countries */}
           <div style={{...labelS,marginBottom:10}}>Countries <span style={{color:'rgba(255,255,255,0.2)',fontWeight:400,textTransform:'none',letterSpacing:0}}>(min 2)</span></div>
           <div style={{display:'flex',flexWrap:'wrap',gap:8,marginBottom:22}}>
             {COUNTRIES.map(c=>(

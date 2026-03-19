@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
 
 const PrismaticBurst = dynamic(() => import('./components/PrismaticBurst'), { ssr: false })
@@ -75,19 +74,14 @@ export default function Landing() {
   }
 
   return (
-    <div style={{ minHeight:'100vh', background:'#06060f', overflow:'hidden', position:'relative', fontFamily: F.body }}>
+    <div style={{ minHeight:'100vh', background:'#06060f', overflow:'hidden', position:'relative', fontFamily:F.body }}>
 
-      {/* PrismaticBurst */}
       <div style={{ position:'fixed', inset:0, zIndex:0, opacity:0.22 }}>
         <PrismaticBurst animationType="rotate3d" intensity={2.5} speed={0.4}
           distort={0} rayCount={0} mixBlendMode="lighten"
           colors={['#ff007a','#4d3dff','#00f5ff','#7c3aed','#ffffff']} />
       </div>
-
-      {/* Dark overlay */}
       <div style={{ position:'fixed', inset:0, zIndex:1, background:'rgba(6,6,15,0.65)', pointerEvents:'none' }} />
-
-      {/* Grid */}
       <div style={{ position:'fixed', inset:0, zIndex:1, pointerEvents:'none',
         backgroundImage:'linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px)',
         backgroundSize:'64px 64px' }} />
@@ -110,23 +104,16 @@ export default function Landing() {
           </div>
           <span style={{ color:'#fff', fontWeight:800, fontSize:18, fontFamily:F.head, letterSpacing:'-0.5px' }}>EduROI</span>
         </div>
-
-        {/* Clerk auth buttons */}
-        <SignedOut>
-          <SignInButton mode="modal">
-            <button style={{ padding:'9px 24px', fontSize:13, fontWeight:600, color:'#fff',
-              fontFamily:F.body, background:'rgba(255,255,255,0.06)',
-              border:'1px solid rgba(255,255,255,0.12)', borderRadius:40,
-              cursor:'pointer', letterSpacing:'-0.1px', transition:'all 0.2s' }}
-              onMouseEnter={e => { const el=e.currentTarget; el.style.background='rgba(255,255,255,0.11)'; el.style.borderColor='rgba(255,255,255,0.22)' }}
-              onMouseLeave={e => { const el=e.currentTarget; el.style.background='rgba(255,255,255,0.06)'; el.style.borderColor='rgba(255,255,255,0.12)' }}>
-              Sign in
-            </button>
-          </SignInButton>
-        </SignedOut>
-        <SignedIn>
-          <UserButton afterSignOutUrl="/" />
-        </SignedIn>
+        <button
+          onClick={() => router.push('/calculator')}
+          style={{ padding:'9px 24px', fontSize:13, fontWeight:600, color:'#fff',
+            fontFamily:F.body, background:'rgba(255,255,255,0.06)',
+            border:'1px solid rgba(255,255,255,0.12)', borderRadius:40,
+            cursor:'pointer', letterSpacing:'-0.1px', transition:'all 0.2s' }}
+          onMouseEnter={e => { const el=e.currentTarget; el.style.background='rgba(255,255,255,0.11)'; el.style.borderColor='rgba(255,255,255,0.22)' }}
+          onMouseLeave={e => { const el=e.currentTarget; el.style.background='rgba(255,255,255,0.06)'; el.style.borderColor='rgba(255,255,255,0.12)' }}>
+          Sign in
+        </button>
       </nav>
 
       {/* Ticker */}
@@ -212,7 +199,7 @@ export default function Landing() {
       <div style={{ position:'relative', zIndex:10, display:'flex', justifyContent:'center', margin:'14px auto 48px', maxWidth:500,
         border:'1px solid rgba(255,255,255,0.07)', borderRadius:16, overflow:'hidden', background:'rgba(255,255,255,0.02)' }}>
         {[{n:'5',l:'Countries'},{n:'10',l:'Majors'},{n:'12K+',l:'Data points'},{n:'R²=0.89',l:'ML accuracy'}].map((s,i,arr) => (
-          <div key={s.n} style={{ flex:1, padding:'16px 0', textAlign:'center', borderRight: i<arr.length-1?'1px solid rgba(255,255,255,0.07)':'none' }}>
+          <div key={s.n} style={{ flex:1, padding:'16px 0', textAlign:'center', borderRight:i<arr.length-1?'1px solid rgba(255,255,255,0.07)':'none' }}>
             <div style={{ fontSize:20, fontWeight:800, color:'#fff', fontFamily:F.head, letterSpacing:'-0.5px' }}>{s.n}</div>
             <div style={{ fontSize:10, color:'rgba(255,255,255,0.28)', marginTop:3, fontFamily:F.body, letterSpacing:'0.4px' }}>{s.l}</div>
           </div>
