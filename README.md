@@ -146,6 +146,7 @@ Compare ROI across multiple countries.
   "duration_years": 4,
   "aid_pct": 20
 }
+```
 POST /pr/pathways
 
 Get immigration pathway insights per country.
@@ -154,12 +155,13 @@ GET /health
 
 Health check endpoint.
 
+---
+
 ## Local Development
 
 ### Clone Repository
 
-```bash
-git clone https://github.com/your-username/edu-roi.git
+git clone https://github.com/snehabhawar/edu-roi.git
 cd edu-roi
 
 **Backend Setup**
