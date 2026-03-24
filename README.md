@@ -139,7 +139,7 @@ Health check endpoint.
 **Local Development**
 
 1. Clone Repo
-git clone https://github.com/your-username/edu-roi.git
+git clone https://github.com/snehabhawar/edu-roi.git
 cd edu-roi
 
 2. Backend Setup
