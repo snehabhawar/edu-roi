@@ -154,7 +154,13 @@ GET /health
 
 Health check endpoint.
 
----
+## Local Development
+
+### Clone Repository
+
+```bash
+git clone https://github.com/your-username/edu-roi.git
+cd edu-roi
 
 **Backend Setup**
 
