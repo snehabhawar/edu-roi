@@ -29,16 +29,19 @@ It uses machine learning trained on real government datasets to help students ev
 
 ---
 
-## Live Demo
 
-- Frontend: https://your-vercel-url.vercel.app  
-- API Docs: https://your-railway-url.up.railway.app/docs  
-
----
 
 ## Screenshots
 
-_Add screenshots here after deployment_
+<img width="2530" height="1389" alt="image" src="https://github.com/user-attachments/assets/dc36164f-df2b-4f8c-ad08-a1e15c1cac3f" />
+
+<img width="2461" height="1300" alt="image" src="https://github.com/user-attachments/assets/42778f7c-03e0-4419-ba6f-a8bba82c18e9" />
+
+<img width="2509" height="1389" alt="image" src="https://github.com/user-attachments/assets/942279ff-c543-41f7-bcb3-17265a733d49" />
+
+<img width="1582" height="1250" alt="image" src="https://github.com/user-attachments/assets/5321cb19-9cd8-4408-940e-18db5b5acf2f" />
+
+<img width="2122" height="1394" alt="image" src="https://github.com/user-attachments/assets/7fecb302-e819-484b-bf8d-b8685461cccd" />
 
 ---
 
